@@ -1,22 +1,31 @@
-BreezeStyleSheets
+PepStyles
 =================
 
-Breeze and BreezeDark-like stylesheets for Qt Applications.
+Provides two cross-platform stylesheets in Qt with the same look-and-feel for the Pep/9 suite of applications.
+
+
+Theme generation
+================
+To modify the colors used in generating the light & dark themes, navigate to template/colorsDark.txt or template/colorsLight.text
+After reading through the comments to find the colors to be changed, execute generate_styles.py, and light.qss & dark.qss will automatically be regenerated.
 
 C++ Installation
 ================
 
-Copy `breeze.qrc`, `dark.qss`, `light.qss` and the `dark` and `light` folders into your project directory and add the qrc file to your project file.
+PepStyles is meant to be used a submodule to the Pep/9 suite of applications.
 
-For example:
-
-```qmake
-TARGET = app
-SOURCES = main.cpp
-RESOURCES = breeze.qrc
+To add and initialize PepStyles as a submodule, run:
+```git
+git submodule add https://github.com/Matthew-McRaven/PepStyles
+git submodule update
 ```
 
-To load the stylesheet in C++, load the file using QFile and read the data. For example, to load BreezeDark, run:
+After downloading, add PepStyles.pepstyles.qrc to the applications resources.
+```qmake
+RESOURCES = PepStyles/pepstyles.qrc
+```
+
+To load the stylesheet in C++, load the file using QFile and read the data. For example, to load the dark style, run:
 
 ```cpp
 
@@ -34,63 +43,31 @@ int main(int argc, char *argv[])
     file.open(QFile::ReadOnly | QFile::Text);
     QTextStream stream(&file);
     app.setStyleSheet(stream.readAll());
-
-    // code goes here
-
     return app.exec();
 }
 ```
 
-PyQt5 Installation
-==================
-
-To compile the stylesheet for use with PyQt5, compile with the following command `pyrcc5 breeze.qrc -o breeze_resources.py`, and import the stylesheets. Afterwards, to load the stylesheet in Python, load the file using QFile and read the data. For example, to load BreezeDark, run:
-
-
-```python
-
-from PyQt5 import QtWidgets
-from PyQt5.QtCore import QFile, QTextStream
-import breeze_resources
-
-
-def main():
-    app = QtWidgets.QApplication(sys.argv)
-
-    # set stylesheet
-    file = QFile(":/dark.qss")
-    file.open(QFile.ReadOnly | QFile.Text)
-    stream = QTextStream(file)
-    app.setStyleSheet(stream.readAll())
-
-    # code goes here
-
-    app.exec_()
-}
-```
+To remove PepStyles as a submodule, one must do the following:
+- Delete the relevant section from the .gitmodules file.
+- Stage the .gitmodules changes git add .gitmodules
+- Delete the relevant section from .git/config.
+- Run git rm --cached path_to_submodule (no trailing slash).
+- Run rm -rf .git/modules/path_to_submodule (no trailing slash).
+- Commit git commit -m "Removed submodule <name>"
+- Delete the now untracked submodule files rm -rf path_to_submodule
 
 License
 =======
 
 MIT, see [license](/LICENSE.md).
 
-Example
-=======
-
-**Breeze/BreezeDark**
-
-Example user interface using the Breeze and BreezeDark stylesheets side-by-side.
-
-![BreezeDark](/assets/Breeze.gif)
-
 Acknowledgements
 ================
 
+PepStyles is a fork [BreezeStyleSheets](https://github.com/Alexhuszagh/BreezeStyleSheets).
 BreezeStyleSheets is a fork of [QDarkStyleSheet](https://github.com/ColinDuquesnoy/QDarkStyleSheet).
 
 Contact
 =======
 
-Email: ahuszagh@gmail.com  
-Twitter: KardOnIce
-
+Email: matthew.mcraven@pepperdine.edu
